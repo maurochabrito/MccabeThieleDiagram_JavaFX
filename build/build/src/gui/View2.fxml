@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minWidth="1280.0" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
+   <children>
+      <LineChart fx:id="lineChart" createSymbols="false" layoutX="643.0" layoutY="266.0" opacity="0.0" prefHeight="395.0" prefWidth="631.0" stylesheets="@thick-chart.css">
+        <xAxis>
+          <NumberAxis autoRanging="false" side="BOTTOM" upperBound="1.0" fx:id="x">
+               <tickLabelFont>
+                  <Font name="Arial" size="10.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="y" autoRanging="false" side="LEFT" upperBound="1.0">
+               <tickLabelFont>
+                  <Font name="Arial" size="10.0" />
+               </tickLabelFont></NumberAxis>
+        </yAxis>
+      </LineChart>
+   </children>
+</AnchorPane>

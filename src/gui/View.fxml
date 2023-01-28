@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minWidth="1280.0" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
+   <children>
+      <Label layoutX="186.0" layoutY="9.0" text="Simple Distillation Column">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font></Label>
+      <TextField fx:id="txtAntoineA1" alignment="CENTER" layoutX="280.0" layoutY="130.0" prefHeight="23.0" prefWidth="80.0" text="18.9119" />
+      <Label layoutX="226.0" layoutY="55.0" text="Thermodynamic Model ">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="99.0" text="Substance 1:" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="199.0" text="Substance 2:" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="135.0" text="Antoine Vapor Pressure Model">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="228.0" text="Antoine Vapor Pressure Model">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="320.0" layoutY="162.0" text="A                         B                          C">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAntoineB1" alignment="CENTER" layoutX="377.0" layoutY="130.0" prefHeight="23.0" prefWidth="80.0" text="3803.98" />
+      <TextField fx:id="txtAntoineC1" alignment="CENTER" layoutX="473.0" layoutY="130.0" prefHeight="23.0" prefWidth="80.0" text="-41.68" />
+      <TextField fx:id="txtAntoineA2" alignment="CENTER" layoutX="281.0" layoutY="220.0" prefHeight="23.0" prefWidth="80.0" text="18.3036" />
+      <Label layoutX="321.0" layoutY="252.0" text="A                         B                          C">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAntoineB2" alignment="CENTER" layoutX="378.0" layoutY="220.0" prefHeight="23.0" prefWidth="80.0" text="3816.44" />
+      <TextField fx:id="txtAntoineC2" alignment="CENTER" layoutX="474.0" layoutY="220.0" prefHeight="23.0" prefWidth="80.0" text="-46.13" />
+      <Label layoutX="42.0" layoutY="287.0" text="Liquid Phase Activity Coefficient Model" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="256.0" layoutY="389.0" text="Project Variables">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="11.0" layoutY="428.0" text="Substance 1 fraction on the column streams" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtZ" alignment="CENTER" layoutX="10.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
+      <Label layoutX="25.0" layoutY="493.0" prefHeight="15.0" prefWidth="266.0" text="Feed (Zf)         Distillate (Xd)        Bottom (Xb)">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtXd" alignment="CENTER" layoutX="107.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.85" />
+      <TextField fx:id="txtXb" alignment="CENTER" layoutX="203.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.1" />
+      <Label layoutX="236.0" layoutY="528.0" text="Feed thermal condiction " textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="btCondition1" layoutX="22.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition1Action" text="Subcooled liquid" />
+      <Button fx:id="btCondition2" layoutX="141.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition2Action" text="Saturated liquid" />
+      <Button fx:id="btCondition3" layoutX="257.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition3Action" text="Partially vaporized" />
+      <Button fx:id="btCondition4" layoutX="381.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition4Action" text="Satured vapour" />
+      <Button fx:id="btCondition5" layoutX="489.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition5Action" text="Superheated vapor" />
+      <Label fx:id="labelQ" layoutX="119.0" layoutY="601.0" text="q factor">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtQ" alignment="CENTER" layoutX="22.0" layoutY="596.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
+      <Button fx:id="btRun" layoutX="527.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBtRunAction" text="Run">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="317.0" layoutY="428.0" text="External Pressure" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPressure" alignment="CENTER" layoutX="334.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.0" />
+      <Label layoutX="358.0" layoutY="493.0" prefHeight="15.0" prefWidth="33.0" text="(atm)">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="480.0" layoutY="428.0" text="Reflux Ratio" textFill="RED">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtR" alignment="CENTER" layoutX="478.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.5" />
+      <Label layoutX="450.0" layoutY="493.0" prefHeight="15.0" prefWidth="154.0" text="(as a minimal RR multiple)">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="637.0" maxWidth="0.0" orientation="VERTICAL" prefHeight="670.0" />
+      <TextArea fx:id="txtResult" layoutX="643.0" layoutY="8.0" prefHeight="252.0" prefWidth="631.0">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </TextArea>
+      <LineChart fx:id="lineChart" createSymbols="false" layoutX="643.0" layoutY="266.0" opacity="0.0" prefHeight="395.0" prefWidth="631.0" stylesheets="@thick-chart.css">
+        <xAxis>
+          <NumberAxis autoRanging="false" side="BOTTOM" upperBound="1.0" fx:id="x">
+               <tickLabelFont>
+                  <Font name="Arial" size="10.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="y" autoRanging="false" side="LEFT" upperBound="1.0">
+               <tickLabelFont>
+                  <Font name="Arial" size="10.0" />
+               </tickLabelFont></NumberAxis>
+        </yAxis>
+      </LineChart>
+      <MenuButton fx:id="menuSubstance1" layoutX="132.0" layoutY="95.0" mnemonicParsing="false" text="Substance">
+        <items>
+          <MenuItem fx:id="substance1Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option1" text="Ethanol" />
+          <MenuItem fx:id="substance1Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option2" text="Water" />
+            <MenuItem fx:id="substance1OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance1OptionOtherwise" text="Other" />
+        </items>
+      </MenuButton>
+      <TextField fx:id="substance1Name" disable="true" layoutX="210.0" layoutY="95.0" opacity="0.0" prefHeight="25.0" prefWidth="106.0" text="Type here" />
+      <MenuButton fx:id="menuSubstance2" layoutX="132.0" layoutY="195.0" mnemonicParsing="false" text="Substance">
+         <items>
+            <MenuItem fx:id="substance2Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option1" text="Ethanol" />
+            <MenuItem fx:id="substance2Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option2" text="Water" />
+            <MenuItem fx:id="substance2OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance2OptionOtherwise" text="Other" />
+         </items>
+      </MenuButton>
+      <TextField fx:id="substance2Name" disable="true" layoutX="210.0" layoutY="195.0" opacity="0.0" prefHeight="25.0" prefWidth="106.0" text="Type here" />
+      <MenuButton fx:id="gammaModelMenu" layoutX="41.0" layoutY="311.0" mnemonicParsing="false" text="Gamma Model">
+        <items>
+          <MenuItem fx:id="gammaModelMenuItem1" mnemonicParsing="false" onAction="#onMenuItemGammaOption1" text="Ideal Liquid" />
+          <MenuItem fx:id="gammaModelMenuItem2" mnemonicParsing="false" onAction="#onMenuItemGammaOption2" text="Margules Gamma Model" />
+            <MenuItem mnemonicParsing="false" text="Van Laar Gamma Model" />
+            <MenuItem mnemonicParsing="false" text="Wilson Gamma Model" />
+            <MenuItem mnemonicParsing="false" text="NRTL Gamma Model" />
+        </items>
+      </MenuButton>
+      <TextField fx:id="txtGamma1" alignment="CENTER" disable="true" layoutX="276.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="1.6022" />
+      <TextField fx:id="txtGamma2" alignment="CENTER" disable="true" layoutX="365.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="0.7947" />
+      <TextField fx:id="txtGamma3" alignment="CENTER" disable="true" layoutX="544.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="1.6022" />
+      <TextField fx:id="txtGamma4" alignment="CENTER" disable="true" layoutX="455.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="0.7947" />
+      <Label fx:id="GammaLabel1" disable="true" layoutX="278.0" layoutY="340.0" opacity="0.0" text="         A12">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="GammaLabel2" disable="true" layoutX="366.0" layoutY="340.0" opacity="0.0" text="         A12">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="GammaLabel3" disable="true" layoutX="457.0" layoutY="340.0" opacity="0.0" text="A12">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="GammaLabel4" disable="true" layoutX="546.0" layoutY="339.0" opacity="0.0" text="A12">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ResultController">
+   <children>
+      <Separator layoutX="637.0" orientation="VERTICAL" prefHeight="670.0" prefWidth="0.0" />
+      <TextArea fx:id="result" layoutX="643.0" layoutY="14.0" prefHeight="309.0" prefWidth="631.0" text="Oi" />
+   </children>
+</AnchorPane>
