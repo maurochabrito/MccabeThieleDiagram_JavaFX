@@ -192,15 +192,17 @@ public class ViewController {
 		Double b2 = Double.parseDouble(txtAntoineB2.getText());
 		Double c2 = Double.parseDouble(txtAntoineC2.getText());
 		Double g1 = Double.parseDouble(txtGamma1.getText());
-		Double g2 = Double.parseDouble(txtGamma2.getText());	
+		Double g2 = Double.parseDouble(txtGamma2.getText());
+		Double g3 = Double.parseDouble(txtGamma3.getText());
+		Double g4 = Double.parseDouble(txtGamma4.getText());	
 		VaporPressureModel vpm1 = new Antoine(a1,b1,c1);
+		VaporPressureModel vpm2 = new Antoine(a2,b2,c2);
 		if(this.substance1OtherWasSelected == true) {
 			this.substance1 = substance1Name.getText();
 		}
 		if(this.substance2OtherWasSelected == true) {
 			this.substance2 = substance2Name.getText();
 		}
-		VaporPressureModel vpm2 = new Antoine(a2,b2,c2);
 		GammaModel gm;
 		switch(gammaModelOption) {
 		case "Ideal Liquid":
@@ -214,15 +216,112 @@ public class ViewController {
 			gm = new MargulesGammaModel(g1, g2);
 		break;
 		}
+		//exchange components
+		if(RaoultLaw.mostVolatileComponent(z, vpm1, vpm2, gm, externalPressure) == 2) {
+			a1 = a2.doubleValue();
+			b1 = b2.doubleValue();
+			c1 = c2.doubleValue();
+			g1 = g2.doubleValue();
+			g3 = g4.doubleValue();
+			txtAntoineA2.setText(txtAntoineA1.getText());
+			txtAntoineB2.setText(txtAntoineB1.getText());
+			txtAntoineC2.setText(txtAntoineC1.getText());
+			txtGamma2.setText(txtGamma1.getText());
+			txtGamma4.setText(txtGamma3.getText());
+			a2 = Double.parseDouble(txtAntoineA2.getText());
+			b2 = Double.parseDouble(txtAntoineB2.getText());
+			c2 = Double.parseDouble(txtAntoineC2.getText());
+			g2 = Double.parseDouble(txtGamma2.getText());
+			g4 = Double.parseDouble(txtGamma4.getText());
+			txtAntoineA1.setText(a1.toString());
+			txtAntoineB1.setText(b1.toString());
+			txtAntoineC1.setText(c1.toString());
+			txtGamma1.setText(g1.toString());
+			txtGamma3.setText(g3.toString());
+			vpm1 = new Antoine(a1,b1,c1);//delete
+			vpm2 = new Antoine(a2,b2,c2);//delete
+			switch(gammaModelOption) {//reinstantiating
+			case "Ideal Liquid":
+				gm = new IdealLiquidGammaModel();
+			break;
+			case "Margules Gamma Model":
+				gm = new MargulesGammaModel(g1, g2);
+			break;
+			default:
+				//gm = new IdealLiquidGammaModel();
+				gm = new MargulesGammaModel(g1, g2);
+			break;
+			}
+			//
+			String aux = substance1.toString();
+			substance1 = substance2.toString();
+			substance2 = aux.toString();
+			menuSubstance1.setText(substance1);
+			menuSubstance2.setText(substance2);
+			//
+			z = 1-z;
+			txtZ.setText(z.toString());
+			xd = 1-xd;
+			txtXd.setText(xd.toString());
+			xb = 1-xb;
+			txtXb.setText(xb.toString());
+		}
 		MccabeThiele mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
-		Boolean testR = mt.testR();
+		//DEFENSIVE: Xd, Xb, Z AGAINST Xazeotrope
+		//Change X to represents X2, if substance 2 is more volatile over the domain.
+		String substance = substance1;
+		this.txtResult.setText("foi");
+		boolean componentsExchanged;
+		if(mt.mostVolatileOnFeed() == 2) {			
+			switch(gammaModelOption) {
+			case "Ideal Liquid":
+				gm = new IdealLiquidGammaModel();
+			break;
+			case "Margules Gamma Model":
+				gm = new MargulesGammaModel(g2, g1);
+			break;
+			default:
+				//gm = new IdealLiquidGammaModel();
+				gm = new MargulesGammaModel(g2, g1);
+			break;
+			}
+			vpm1 = new Antoine(a2,b2,c2);
+			vpm2 = new Antoine(a1,b1,c1);
+			mt = new MccabeThiele(externalPressure, 1-xd, 1-xb, 1-z, q, r, vpm1, vpm2, gm);
+			substance = substance2;
+			componentsExchanged = true;
+		}else {
+			componentsExchanged = false;
+			mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+		}
+		//If substance 1 is most volatile, then Xaz > Xd > z > Xb > 0
+		//Otherwise, Xb > z > Xd > Xaz > 0
+			//xb
+			if(xb >= z-0.2) {
+				xb = z-0.2;
+				txtXb.setText(xb.toString());
+				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+			}
+			//Xd
+			if(z+0.2 >= xd) {
+				xd = z+0.2;
+				txtXd.setText(xd.toString());
+				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+			}
+			if(mt.azeotropicPoint()-0.1 <= xd) {
+				xd = mt.azeotropicPoint()-0.1;
+				txtXd.setText(xd.toString());
+				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+			}
+		//DEFENSIVE: REFLUX RATIO
+		Boolean test = mt.testR();
 		while(mt.testR() && r < 50.0) {
 			r = r+0.1;
 		    mt.setR(r);
 			txtR.setText(r.toString());
-			testR = mt.testR();
+			test = mt.testR();
 		}
-		this.txtResult.setText(mt.toString(substance1));
+		this.txtResult.setText(mt.toString(substance));
 		XYChart.Series equilibriumLine = new XYChart.Series<>();
 		XYChart.Series diagonalLine = new XYChart.Series<>();
 		XYChart.Series rectifyingLine = new XYChart.Series<>();
@@ -276,7 +375,7 @@ public class ViewController {
 		List<Series<Double, Double>> verticalLines = new ArrayList();
 		Double Xi = xd;
 		int count = 0;
-		while (count < 300 && count < plateList.size()) {// Make only up to 70 stages
+		while (count < mt.maximumPlates && count < plateList.size()) {// Make only up to 70 stages
 			if (!(mt.plateList().get(count) == null)) {
 				XYChart.Series horizontalPlateLine = new XYChart.Series<>();
 				XYChart.Series verticalPlateLine = new XYChart.Series<>();

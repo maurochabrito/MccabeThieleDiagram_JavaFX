@@ -68,6 +68,30 @@ public class MccabeThiele {
 			return false;//All right
 		}
 	}
+	public boolean testAzeotropeXb() {
+		//tests if both xb and z are simultaneously above or bellow Xazeotrope
+		Double Xaz = RaoultLaw.azeotropePoint(vpm1, vpm2, gm, externalPressure);
+		if(!(RaoultLaw.mostVolatileComponent(z, vpm1, vpm2, gm, Xaz) == RaoultLaw.mostVolatileComponent(xb, vpm1, vpm2, gm, Xaz))) {
+			return false;// all right
+		}else {
+			return true;//z and xb are on different regions around azeotropic point
+		}
+	}
+	public boolean testAzeotropeXd() {
+		//tests if both xd and z are simultaneously above or bellow Xazeotrope
+		Double Xaz = RaoultLaw.azeotropePoint(vpm1, vpm2, gm, externalPressure);
+		if(!(RaoultLaw.mostVolatileComponent(z, vpm1, vpm2, gm, Xaz) == RaoultLaw.mostVolatileComponent(xd, vpm1, vpm2, gm, Xaz))) {
+			return false;// all right
+		}else {
+			return true;//z and xd are on different regions around azeotropic point
+		}
+	}
+	public Double azeotropicPoint() {
+		return RaoultLaw.azeotropePoint(vpm1, vpm2, gm, externalPressure);
+	}
+	public Integer mostVolatileOnFeed() {
+		return RaoultLaw.mostVolatileComponent(z, vpm1, vpm2, gm, externalPressure);
+	}
 	//Next: implement Nmin method, returning the exact value and a overload plateList returning Nmin plateList;
 	public List<Plate> plateList(){
 		List<Plate> plateList = new ArrayList<>();

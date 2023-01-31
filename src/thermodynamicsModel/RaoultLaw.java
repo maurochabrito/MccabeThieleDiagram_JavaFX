@@ -1,6 +1,7 @@
 package thermodynamicsModel;
 
 public class RaoultLaw {
+	
 	public static Double y(Double X, Double T, VaporPressureModel vpm1, VaporPressureModel vpm2, GammaModel gm, Double pressure) {
 		Double y = gm.gamma(1, X, T)*X*vpm1.pressure(T)/pressure;
 		return y;
