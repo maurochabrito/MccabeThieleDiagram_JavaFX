@@ -53,6 +53,20 @@ public class MccabeThiele {
 		Double rMin = ((yi - xd) / (xi - xd)) / (1 - ((yi - xd) / (xi - xd)));
 		return rMin;
 	}
+	public boolean testR() {
+		double x1 = rectifyingLine.intersection(qLine);
+		if(!(this.q == 1)) {
+			if(this.rectifyingLine.nonElementarIntersectionBellow(x1, xd, gm, vpm1, vpm2, externalPressure)) {
+				return true;//There is a problem
+			}
+			return false;//All right
+		}else {
+			if(this.plateList().size() >= 100) {
+				return true;//There is a problem
+			}
+			return false;//All right
+		}
+	}
 	//Next: implement Nmin method, returning the exact value and a overload plateList returning Nmin plateList;
 	public List<Plate> plateList(){
 		List<Plate> plateList = new ArrayList<>();
@@ -64,7 +78,7 @@ public class MccabeThiele {
 		int i = 1;
 		Plate currentPlate = new Plate(i, currentX, currentY, currentT);
 		plateList.add(currentPlate);
-		while(currentX > xb && i < 300) {
+		while(currentX > xb && i < 100) {
 			if(!rectifyingLine.compareTo(strippingLine, currentX)) {
 				currentY = rectifyingLine.y(currentX);
 			} else {
@@ -128,14 +142,24 @@ public class MccabeThiele {
 	public Line getStrippingLine() {
 		return strippingLine;
 	}
-	
+	public void setR(Double newR) {
+		Double rMin = this.rMin();
+		this.r = newR;
+		this.rectifyingLine = new Line(r * rMin / (r * rMin + 1), xd / (r * rMin + 1));
+		Double xTriple = qLine.intersection(rectifyingLine);// Triple intersection between qline and operational lines
+		Double yTriple = rectifyingLine.y(xTriple);
+		// StrippingLine
+		Double strippingAlpha = (yTriple - xb) / (xTriple - xb);
+		Double strippingBetha = yTriple - strippingAlpha * xTriple;
+		this.strippingLine = new Line(strippingAlpha, strippingBetha);
+	}
 	public String toString(String substance) {
 		StringBuilder sb = new StringBuilder();
 		///sb.append("Project Variables:\n\nZf = "+z+"\nXd = "+xd+"\nXb = "+xb+"\nExternal pressure = "+externalPressure+" atm\nq fator = "+q+"");
 		List<Plate> plateList = new ArrayList<>();
 		plateList = this.plateList();
-		if(plateList.size() == 300) {
-			sb.append("\nWARNING! THIS APPLICATION COUNTS AND DRAWS UP TO 300th EQUILIBRIUM STAGE ONLY.\n(FOR DEFENSIVE PROGRAMMING PURPOSES)\n");
+		if(plateList.size() == 100) {
+			sb.append("\nWARNING! THIS APPLICATION COUNTS AND DRAWS UP TO 100th EQUILIBRIUM STAGE ONLY.\n(FOR DEFENSIVE PROGRAMMING PURPOSES)\n");
 		}
 		sb.append("Plate List:\nX -> "+substance+" fraction on liquid phase\nY -> "+substance+" fraction on vapor phase\nT -> Temperature on current plate\n(Plate counting starts at the top plate)\n");
 		for(Plate p : plateList) {

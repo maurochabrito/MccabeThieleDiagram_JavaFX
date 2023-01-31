@@ -25,8 +25,9 @@ public class QLine extends Line{
 		if(q == 1) {
 			return z;
 		}else {
-		Line qLine = new Line(alpha, betha);
-		double xIntersected = qLine.nonElementarIntersection(gm, vpm1, vpm2, pressure);
+		//Line qLine = new Line(alpha, betha);
+		//double xIntersected = qLine.nonElementarIntersection(gm, vpm1, vpm2, pressure);
+		double xIntersected = this.nonElementarIntersection(gm, vpm1, vpm2, pressure);
 		return xIntersected;
 		}
 	}

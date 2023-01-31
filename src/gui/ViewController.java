@@ -215,6 +215,13 @@ public class ViewController {
 		break;
 		}
 		MccabeThiele mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+		Boolean testR = mt.testR();
+		while(mt.testR()) {
+			r = r+0.1;
+		    mt.setR(r);
+			txtR.setText(r.toString());
+			testR = mt.testR();
+		}
 		this.txtResult.setText(mt.toString(substance1));
 		XYChart.Series equilibriumLine = new XYChart.Series<>();
 		XYChart.Series diagonalLine = new XYChart.Series<>();

@@ -65,12 +65,39 @@ public class Line {
 			Boolean newComparation = this.y(Xb) > RaoultLaw.iterativeY(Xb, vpm1, vpm2, gm, pressure);
 			if (newComparation == comparation) {
 				Xb = X;
-				X = (Xa+X)/2;
-			}else {
+			    X = (Xa+X)/2;
+			}else{
 				Xa = X;
 				X = (Xb+X)/2;
 			}
 		}
 		return X;
 	}
+	//public Double nonElementarIntersectionAbove(Double limit, Double upperLimit, GammaModel gm, VaporPressureModel vpm1, VaporPressureModel vpm2, Double pressure) {
+		//Double Xa = limit;
+		//Double Xb = upperLimit;
+		//Double X = 0.0;
+		//Double fa;
+		//Double fb;
+		//for(int i = 0; i< 60; i++) {
+			//fa = this.y(Xa)-RaoultLaw.iterativeY(Xa, vpm1, vpm2, gm, pressure);
+			//fb = this.y(Xb)-RaoultLaw.iterativeY(Xb, vpm1, vpm2, gm, pressure);
+			//X = Xb-(fb*(Xb-Xa))/(fb-fa);
+		//}
+		//return X;
+	//}
+	public Boolean nonElementarIntersectionBellow(Double bottomLimit, Double upperLimit, GammaModel gm, VaporPressureModel vpm1, VaporPressureModel vpm2, Double pressure) {
+		Double X = upperLimit-0.001;
+		Boolean test = false;
+		while(X > bottomLimit && test == false) {
+			//if(y(X) > RaoultLaw.iterativeY(X, vpm1, vpm2, gm, pressure)) {
+			if(Math.abs(y(X)-RaoultLaw.iterativeY(X, vpm1, vpm2, gm, pressure))<0.001){
+				test = true;
+			}
+			X = X-0.001;
+		}
+		return test;
+	
+	}
+
 }
