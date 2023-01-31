@@ -216,7 +216,7 @@ public class ViewController {
 		}
 		MccabeThiele mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
 		Boolean testR = mt.testR();
-		while(mt.testR()) {
+		while(mt.testR() && r < 50.0) {
 			r = r+0.1;
 		    mt.setR(r);
 			txtR.setText(r.toString());
