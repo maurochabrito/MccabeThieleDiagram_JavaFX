@@ -42,18 +42,7 @@ public class Line {
 		return this.y(X) > otherLine.y(X);
 	}
 	public Double intersection(Line otherLine) {
-		Double X = 0.0; //initial X
-		//h -> Sensibility
-		//Boolean comparation = this.compareTo(otherLine, X);
-		//Boolean newComparation = this.compareTo(otherLine, X+h);
-		//while(newComparation == comparation) {
-			//X = X+h;
-			//comparation = newComparation;
-			//newComparation = this.compareTo(otherLine, X+h);
-		//}
-		//Double limitX = X;
-		//X = (limitX+X)/2;
-		//return X;
+		Double X = 0.0;
 		return (otherLine.getBetha()-this.getBetha())/(this.getAlpha()-otherLine.getAlpha());
 	}
 	public Double nonElementarIntersection(GammaModel gm, VaporPressureModel vpm1, VaporPressureModel vpm2, Double pressure) {
@@ -73,19 +62,6 @@ public class Line {
 		}
 		return X;
 	}
-	//public Double nonElementarIntersectionAbove(Double limit, Double upperLimit, GammaModel gm, VaporPressureModel vpm1, VaporPressureModel vpm2, Double pressure) {
-		//Double Xa = limit;
-		//Double Xb = upperLimit;
-		//Double X = 0.0;
-		//Double fa;
-		//Double fb;
-		//for(int i = 0; i< 60; i++) {
-			//fa = this.y(Xa)-RaoultLaw.iterativeY(Xa, vpm1, vpm2, gm, pressure);
-			//fb = this.y(Xb)-RaoultLaw.iterativeY(Xb, vpm1, vpm2, gm, pressure);
-			//X = Xb-(fb*(Xb-Xa))/(fb-fa);
-		//}
-		//return X;
-	//}
 	public Boolean nonElementarIntersectionBellow(Double bottomLimit, Double upperLimit, GammaModel gm, VaporPressureModel vpm1, VaporPressureModel vpm2, Double pressure) {
 		Double X = upperLimit-0.001;
 		Boolean test = false;

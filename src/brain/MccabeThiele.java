@@ -8,6 +8,7 @@ import thermodynamicsModel.RaoultLaw;
 import thermodynamicsModel.VaporPressureModel;
 
 public class MccabeThiele {
+	public static final Integer maximumPlates = 100; 
 	private Double externalPressure = 760.0;
 	private Double xd;
 	private Double xb;
@@ -61,7 +62,7 @@ public class MccabeThiele {
 			}
 			return false;//All right
 		}else {
-			if(this.plateList().size() >= 100) {
+			if(this.plateList().size() >= maximumPlates) {
 				return true;//There is a problem
 			}
 			return false;//All right
@@ -78,7 +79,7 @@ public class MccabeThiele {
 		int i = 1;
 		Plate currentPlate = new Plate(i, currentX, currentY, currentT);
 		plateList.add(currentPlate);
-		while(currentX > xb && i < 100) {
+		while(currentX > xb && i < maximumPlates) {
 			if(!rectifyingLine.compareTo(strippingLine, currentX)) {
 				currentY = rectifyingLine.y(currentX);
 			} else {
@@ -158,8 +159,8 @@ public class MccabeThiele {
 		///sb.append("Project Variables:\n\nZf = "+z+"\nXd = "+xd+"\nXb = "+xb+"\nExternal pressure = "+externalPressure+" atm\nq fator = "+q+"");
 		List<Plate> plateList = new ArrayList<>();
 		plateList = this.plateList();
-		if(plateList.size() == 100) {
-			sb.append("\nWARNING! THIS APPLICATION COUNTS AND DRAWS UP TO 100th EQUILIBRIUM STAGE ONLY.\n(FOR DEFENSIVE PROGRAMMING PURPOSES)\n");
+		if(plateList.size() == maximumPlates) {
+			sb.append("\nWARNING! THIS APPLICATION COUNTS AND DRAWS UP TO "+maximumPlates+"th EQUILIBRIUM STAGE ONLY.\n(FOR DEFENSIVE PROGRAMMING PURPOSES)\n");
 		}
 		sb.append("Plate List:\nX -> "+substance+" fraction on liquid phase\nY -> "+substance+" fraction on vapor phase\nT -> Temperature on current plate\n(Plate counting starts at the top plate)\n");
 		for(Plate p : plateList) {
