@@ -140,6 +140,8 @@
         <items>
           <MenuItem fx:id="substance1Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option1" text="ethanol" />
           <MenuItem fx:id="substance1Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option2" text="water" />
+            <MenuItem fx:id="substance1Option3" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option3" text="chloroform" />
+            <MenuItem fx:id="substance1Option4" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option4" text="acetone" />
             <MenuItem fx:id="substance1OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance1OptionOtherwise" text="other (type)" />
         </items>
       </MenuButton>
@@ -148,6 +150,8 @@
          <items>
             <MenuItem fx:id="substance2Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option1" text="ethanol" />
             <MenuItem fx:id="substance2Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option2" text="water" />
+            <MenuItem fx:id="substance2Option3" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option3" text="chloroform" />
+            <MenuItem fx:id="substance2Option4" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option4" text="acetone" />
             <MenuItem fx:id="substance2OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance2OptionOtherwise" text="other (type)" />
          </items>
       </MenuButton>

@@ -87,6 +87,14 @@ public class ViewController {
 	@FXML
 	private MenuItem substance1Option2;
 	@FXML
+	private MenuItem substance1Option3;
+	@FXML
+	private MenuItem substance1Option4;
+	@FXML
+	private MenuItem substance1Option5;
+	@FXML
+	private MenuItem substance1Option6;
+	@FXML
 	private MenuItem substance1OptionOtherwise;
 	boolean substance1OtherWasSelected = false;
 	@FXML
@@ -97,6 +105,14 @@ public class ViewController {
 	private MenuItem substance2Option1;
 	@FXML
 	private MenuItem substance2Option2;
+	@FXML
+	private MenuItem substance2Option3;
+	@FXML
+	private MenuItem substance2Option4;
+	@FXML
+	private MenuItem substance2Option5;
+	@FXML
+	private MenuItem substance2Option6;
 	@FXML
 	private MenuItem substance2OptionOtherwise;
 	boolean substance2OtherWasSelected = false;
@@ -282,8 +298,8 @@ public class ViewController {
 				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
 				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 			}
-			if(mt.azeotropicPoint()-0.1 <= xd) {
-				xd = mt.azeotropicPoint()-0.1;
+			if(mt.azeotropicPoint()-0.1 <= xd && !(gm instanceof IdealLiquidGammaModel)) {
+				xd = xd-0.1;
 				txtXd.setText(xd.toString());
 				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
 				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
@@ -419,6 +435,26 @@ public class ViewController {
 		this.txtAntoineB1.setText("3816.44");
 		this.txtAntoineC1.setText("-46.13");
 	}
+	public void onMenuItemSubstance1Option3() {
+		this.substance1 = "chloroform";
+		this.menuSubstance1.setText("chloroform");
+		this.substance1OtherWasSelected = false;
+		this.substance1Name.setOpacity(0.0);
+		this.substance1Name.setDisable(true);
+		this.txtAntoineA1.setText("15.9732");
+		this.txtAntoineB1.setText("2696.8");
+		this.txtAntoineC1.setText("-46.16");
+	}
+	public void onMenuItemSubstance1Option4() {
+		this.substance1 = "acetone";
+		this.menuSubstance1.setText("acetone");
+		this.substance1OtherWasSelected = false;
+		this.substance1Name.setOpacity(0.0);
+		this.substance1Name.setDisable(true);
+		this.txtAntoineA1.setText("16.6513");
+		this.txtAntoineB1.setText("2940.46");
+		this.txtAntoineC1.setText("-35.93");
+	}
 	public void onMenuItemSubstance1OptionOtherwise() {
 		this.substance1OtherWasSelected = true;
 		this.menuSubstance1.setText("Other:");
@@ -447,6 +483,26 @@ public class ViewController {
 		this.txtAntoineA2.setText("18.3036");
 		this.txtAntoineB2.setText("3816.44");
 		this.txtAntoineC2.setText("-46.13");
+	}
+	public void onMenuItemSubstance2Option3() {
+		this.substance2 = "chloroform";
+		this.menuSubstance2.setText("chloroform");
+		this.substance2OtherWasSelected = false;
+		this.substance2Name.setOpacity(0.0);
+		this.substance2Name.setDisable(true);
+		this.txtAntoineA2.setText("15.9732");
+		this.txtAntoineB2.setText("2696.8");
+		this.txtAntoineC2.setText("-46.16");
+	}
+	public void onMenuItemSubstance2Option4() {
+		this.substance2 = "acetone";
+		this.menuSubstance2.setText("acetone");
+		this.substance2OtherWasSelected = false;
+		this.substance2Name.setOpacity(0.0);
+		this.substance2Name.setDisable(true);
+		this.txtAntoineA2.setText("16.6513");
+		this.txtAntoineB2.setText("2940.46");
+		this.txtAntoineC2.setText("-35.93");
 	}
 	public void onMenuItemSubstance2OptionOtherwise() {
 		this.substance2OtherWasSelected = true;
