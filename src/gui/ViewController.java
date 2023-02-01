@@ -23,6 +23,7 @@ import thermodynamicsModel.VaporPressureModel;
 import thermodynamicsModel.impl.Antoine;
 import thermodynamicsModel.impl.IdealLiquidGammaModel;
 import thermodynamicsModel.impl.MargulesGammaModel;
+import thermodynamicsModel.impl.NRTLGammaModel;
 import thermodynamicsModel.impl.VanLaarGammaModel;
 
 public class ViewController {
@@ -229,6 +230,9 @@ public class ViewController {
 		case "Van Laar Gamma Model":
 			gm = new VanLaarGammaModel(g1, g2);
 		break;
+		case "NRTL Gamma Model":
+			gm = new NRTLGammaModel(g1, g2, g3, g4);
+		break;
 		default:
 			//gm = new IdealLiquidGammaModel();
 			gm = new MargulesGammaModel(g1, g2);
@@ -268,6 +272,9 @@ public class ViewController {
 			case "Van Laar Gamma Model":
 				gm = new VanLaarGammaModel(g1, g2);
 			break;
+			case "NRTL Gamma Model":
+				gm = new NRTLGammaModel(g1, g2, g3, g4);
+			break;
 			default:
 				//gm = new IdealLiquidGammaModel();
 				gm = new MargulesGammaModel(g1, g2);
@@ -303,6 +310,9 @@ public class ViewController {
 			break;
 			case "Van Laar Gamma Model":
 				gm = new VanLaarGammaModel(g2, g1);
+			break;
+			case "NRTL Gamma Model":
+				gm = new NRTLGammaModel(g2, g1, g4, g3);
 			break;
 			default:
 				//gm = new IdealLiquidGammaModel();
@@ -569,5 +579,29 @@ public class ViewController {
 		this.txtGamma4.setOpacity(0.0);
 		this.GammaLabel1.setText("         A12");
 		this.GammaLabel2.setText("         A21");
+	}
+	public void onMenuItemGammaOption4() {
+		this.gammaModelOption = "NRTL Gamma Model";
+		this.gammaModelMenu.setText(gammaModelOption);
+		this.GammaLabel1.setDisable(true);
+		this.GammaLabel2.setDisable(true);
+		this.GammaLabel3.setDisable(true);
+		this.GammaLabel4.setDisable(true);
+		this.GammaLabel1.setOpacity(1.0);
+		this.GammaLabel2.setOpacity(1.0);
+		this.GammaLabel3.setOpacity(1.0);
+		this.GammaLabel4.setOpacity(1.0);
+		this.txtGamma1.setDisable(false);
+		this.txtGamma2.setDisable(false);
+		this.txtGamma3.setDisable(false);
+		this.txtGamma4.setDisable(false);
+		this.txtGamma1.setOpacity(1.0);
+		this.txtGamma2.setOpacity(1.0);
+		this.txtGamma3.setOpacity(1.0);
+		this.txtGamma4.setOpacity(1.0);
+		this.GammaLabel1.setText("         α12");
+		this.GammaLabel2.setText("         α21");
+		this.GammaLabel3.setText("        Δg12");
+		this.GammaLabel4.setText("        Δg21");
 	}
 }

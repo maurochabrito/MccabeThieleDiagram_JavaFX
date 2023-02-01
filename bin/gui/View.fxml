@@ -143,17 +143,17 @@
       </LineChart>
       <MenuButton fx:id="menuSubstance1" layoutX="132.0" layoutY="95.0" mnemonicParsing="false" text="Substance">
         <items>
-          <MenuItem fx:id="substance1Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option1" text="Ethanol" />
-          <MenuItem fx:id="substance1Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option2" text="Water" />
-            <MenuItem fx:id="substance1OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance1OptionOtherwise" text="Other" />
+          <MenuItem fx:id="substance1Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option1" text="ethanol" />
+          <MenuItem fx:id="substance1Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance1Option2" text="water" />
+            <MenuItem fx:id="substance1OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance1OptionOtherwise" text="other (type)" />
         </items>
       </MenuButton>
       <TextField fx:id="substance1Name" disable="true" layoutX="210.0" layoutY="95.0" opacity="0.0" prefHeight="25.0" prefWidth="106.0" text="Type here" />
       <MenuButton fx:id="menuSubstance2" layoutX="132.0" layoutY="195.0" mnemonicParsing="false" text="Substance">
          <items>
-            <MenuItem fx:id="substance2Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option1" text="Ethanol" />
-            <MenuItem fx:id="substance2Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option2" text="Water" />
-            <MenuItem fx:id="substance2OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance2OptionOtherwise" text="Other" />
+            <MenuItem fx:id="substance2Option1" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option1" text="ethanol" />
+            <MenuItem fx:id="substance2Option2" mnemonicParsing="false" onAction="#onMenuItemSubstance2Option2" text="water" />
+            <MenuItem fx:id="substance2OptionOtherwise" mnemonicParsing="false" onAction="#onMenuItemSubstance2OptionOtherwise" text="other (type)" />
          </items>
       </MenuButton>
       <TextField fx:id="substance2Name" disable="true" layoutX="210.0" layoutY="195.0" opacity="0.0" prefHeight="25.0" prefWidth="106.0" text="Type here" />
@@ -162,14 +162,13 @@
           <MenuItem fx:id="gammaModelMenuItem1" mnemonicParsing="false" onAction="#onMenuItemGammaOption1" text="Ideal Liquid" />
           <MenuItem fx:id="gammaModelMenuItem2" mnemonicParsing="false" onAction="#onMenuItemGammaOption2" text="Margules Gamma Model" />
             <MenuItem fx:id="gammaModelMenuItem3" mnemonicParsing="false" onAction="#onMenuItemGammaOption3" text="Van Laar Gamma Model" />
-            <MenuItem mnemonicParsing="false" text="Wilson Gamma Model" />
-            <MenuItem mnemonicParsing="false" text="NRTL Gamma Model" />
+            <MenuItem mnemonicParsing="false" onAction="#onMenuItemGammaOption4" text="NRTL Gamma Model" />
         </items>
       </MenuButton>
       <TextField fx:id="txtGamma1" alignment="CENTER" disable="true" layoutX="276.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="1.6022" />
       <TextField fx:id="txtGamma2" alignment="CENTER" disable="true" layoutX="365.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="0.7947" />
-      <TextField fx:id="txtGamma3" alignment="CENTER" disable="true" layoutX="544.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="1.6022" />
-      <TextField fx:id="txtGamma4" alignment="CENTER" disable="true" layoutX="455.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="0.7947" />
+      <TextField fx:id="txtGamma3" alignment="CENTER" disable="true" layoutX="455.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="0.7947" />
+      <TextField fx:id="txtGamma4" alignment="CENTER" disable="true" layoutX="544.0" layoutY="308.0" opacity="0.0" prefHeight="23.0" prefWidth="80.0" text="1.6022" />
       <Label fx:id="GammaLabel1" disable="true" layoutX="278.0" layoutY="340.0" opacity="0.0" text="         A12">
          <font>
             <Font name="Arial Bold" size="12.0" />
