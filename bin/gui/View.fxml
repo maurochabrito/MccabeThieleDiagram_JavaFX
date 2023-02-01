@@ -82,40 +82,35 @@
       </Label>
       <TextField fx:id="txtXd" alignment="CENTER" layoutX="107.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.85" />
       <TextField fx:id="txtXb" alignment="CENTER" layoutX="203.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.1" />
-      <Label layoutX="515.0" layoutY="428.0" text="Feed condiction " textFill="RED">
-         <font>
-            <Font name="Arial Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelQ" layoutX="522.0" layoutY="493.0" prefHeight="15.0" prefWidth="98.0">
+      <Label fx:id="labelQ" layoutX="510.0" layoutY="493.0" prefHeight="15.0" prefWidth="98.0">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="txtQ" alignment="CENTER" disable="true" layoutX="527.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
+      <TextField fx:id="txtQ" alignment="CENTER" disable="true" layoutX="507.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
       <Button fx:id="btRun" layoutX="527.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBtRunAction" text="Run">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="429.0" layoutY="428.0" text="Pressure" textFill="RED">
+      <Label layoutX="421.0" layoutY="428.0" text="Pressure" textFill="RED">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPressure" alignment="CENTER" layoutX="417.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.0" />
-      <Label layoutX="441.0" layoutY="493.0" prefHeight="15.0" prefWidth="33.0" text="(atm)">
+      <TextField fx:id="txtPressure" alignment="CENTER" layoutX="409.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.0" />
+      <Label layoutX="433.0" layoutY="493.0" prefHeight="15.0" prefWidth="33.0" text="(atm)">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="315.0" layoutY="428.0" text="Reflux Ratio" textFill="RED">
+      <Label layoutX="309.0" layoutY="428.0" text="Reflux Ratio" textFill="RED">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="txtR" alignment="CENTER" layoutX="313.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.5" />
-      <Label layoutX="291.0" layoutY="493.0" prefHeight="15.0" prefWidth="124.0" text="(as a RRmin multiple)">
+      <TextField fx:id="txtR" alignment="CENTER" layoutX="307.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.5" />
+      <Label layoutX="291.0" layoutY="493.0" prefHeight="15.0" prefWidth="124.0" text="(as RRmin multiple)">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -189,7 +184,7 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <MenuButton fx:id="feedConditionMenu" layoutX="511.0" layoutY="424.0" mnemonicParsing="false" text="Feed Condition">
+      <MenuButton fx:id="feedConditionMenu" layoutX="491.0" layoutY="424.0" mnemonicParsing="false" text="Feed Condition">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#onBtCondition1Action" text="Subcooled liquid" />
           <MenuItem mnemonicParsing="false" onAction="#onBtCondition2Action" text="Saturated liquid" />

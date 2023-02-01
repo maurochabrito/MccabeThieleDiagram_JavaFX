@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import brain.Factory;
 import brain.MccabeThiele;
 import brain.Plate;
 import javafx.fxml.FXML;
@@ -147,7 +148,7 @@ public class ViewController {
 		this.condition = 1.0;
 		feedConditionMenu.setText("Subcooled liquid");
 		labelQ.setText("      q factor");
-		txtQ.setDisable(false);
+		txtQ.setDisable(true);
 		txtQ.setText("1.5");
 		;
 	}
@@ -184,35 +185,29 @@ public class ViewController {
 		feedConditionMenu.setText("Superheated vapour");
 		labelQ.setText("      q factor");
 		txtQ.setText("-0.5");
-		txtQ.setDisable(false);
+		txtQ.setDisable(true);
 	}
 	public synchronized void auxiliar() {
-
 		Locale.setDefault(Locale.US);
+		Factory fc = new Factory();
 		this.externalPressure = 760.0*Double.parseDouble(txtPressure.getText());
 		this.xb = Double.parseDouble(txtXb.getText());
 		this.xd = Double.parseDouble(txtXd.getText());
 		this.z = Double.parseDouble(txtZ.getText());
 		if (condition == 3) {
 			this.q = 1 - Double.parseDouble(txtQ.getText());
-
 		} else {
 			this.q = Double.parseDouble(txtQ.getText());
 		}
 		this.r = Double.parseDouble(txtR.getText());
-		//
-		Double a1 = Double.parseDouble(txtAntoineA1.getText());
-		Double b1 = Double.parseDouble(txtAntoineB1.getText());
-		Double c1 = Double.parseDouble(txtAntoineC1.getText());
-		Double a2 = Double.parseDouble(txtAntoineA2.getText());
-		Double b2 = Double.parseDouble(txtAntoineB2.getText());
-		Double c2 = Double.parseDouble(txtAntoineC2.getText());
-		Double g1 = Double.parseDouble(txtGamma1.getText());
-		Double g2 = Double.parseDouble(txtGamma2.getText());
-		Double g3 = Double.parseDouble(txtGamma3.getText());
-		Double g4 = Double.parseDouble(txtGamma4.getText());	
-		VaporPressureModel vpm1 = new Antoine(a1,b1,c1);
-		VaporPressureModel vpm2 = new Antoine(a2,b2,c2);
+		List<Double> gamma = new ArrayList<>();
+		List<Double> antoine1 = new ArrayList<>();
+		List<Double> antoine2 = new ArrayList<>();
+		gamma = fc.createDoubleList(txtGamma1, txtGamma2, txtGamma3, txtGamma4);
+		antoine1 = fc.createDoubleList(txtAntoineA1, txtAntoineB1, txtAntoineC1);
+		antoine2 = fc.createDoubleList(txtAntoineA2, txtAntoineB2, txtAntoineC2);
+		VaporPressureModel vpm1 = fc.createVapourPressureModel("Antoine", antoine1);
+		VaporPressureModel vpm2 = fc.createVapourPressureModel("Antoine", antoine2);
 		if(this.substance1OtherWasSelected == true) {
 			this.substance1 = substance1Name.getText();
 		}
@@ -220,73 +215,34 @@ public class ViewController {
 			this.substance2 = substance2Name.getText();
 		}
 		GammaModel gm;
-		switch(gammaModelOption) {
-		case "Ideal Liquid":
-			gm = new IdealLiquidGammaModel();
-		break;
-		case "Margules Gamma Model":
-			gm = new MargulesGammaModel(g1, g2);
-		break;
-		case "Van Laar Gamma Model":
-			gm = new VanLaarGammaModel(g1, g2);
-		break;
-		case "NRTL Gamma Model":
-			gm = new NRTLGammaModel(g1, g2, g3, g4);
-		break;
-		default:
-			//gm = new IdealLiquidGammaModel();
-			gm = new MargulesGammaModel(g1, g2);
-		break;
-		}
-		//exchange components
+		gm = fc.createGammaModel(gammaModelOption, gamma);
+		//Defensive: exchange components
 		if(RaoultLaw.mostVolatileComponent(z, vpm1, vpm2, gm, externalPressure) == 2) {
-			a1 = a2.doubleValue();
-			b1 = b2.doubleValue();
-			c1 = c2.doubleValue();
-			g1 = g2.doubleValue();
-			g3 = g4.doubleValue();
+			gamma = fc.createDoubleList(txtGamma2, txtGamma1, txtGamma4, txtGamma3);
+			txtGamma1.setText(gamma.get(0).toString());
+			txtGamma2.setText(gamma.get(1).toString());
+			txtGamma3.setText(gamma.get(2).toString());
+			txtGamma4.setText(gamma.get(3).toString());
+			txtGamma2.setText(txtGamma1.getText());
+			txtGamma4.setText(txtGamma3.getText());
+			gm = fc.createGammaModel(gammaModelOption, gamma);
+			
+			antoine1 = fc.createDoubleList(txtAntoineA2, txtAntoineB2, txtAntoineC2);
 			txtAntoineA2.setText(txtAntoineA1.getText());
 			txtAntoineB2.setText(txtAntoineB1.getText());
 			txtAntoineC2.setText(txtAntoineC1.getText());
-			txtGamma2.setText(txtGamma1.getText());
-			txtGamma4.setText(txtGamma3.getText());
-			a2 = Double.parseDouble(txtAntoineA2.getText());
-			b2 = Double.parseDouble(txtAntoineB2.getText());
-			c2 = Double.parseDouble(txtAntoineC2.getText());
-			g2 = Double.parseDouble(txtGamma2.getText());
-			g4 = Double.parseDouble(txtGamma4.getText());
-			txtAntoineA1.setText(a1.toString());
-			txtAntoineB1.setText(b1.toString());
-			txtAntoineC1.setText(c1.toString());
-			txtGamma1.setText(g1.toString());
-			txtGamma3.setText(g3.toString());
-			vpm1 = new Antoine(a1,b1,c1);//delete
-			vpm2 = new Antoine(a2,b2,c2);//delete
-			switch(gammaModelOption) {//reinstantiating
-			case "Ideal Liquid":
-				gm = new IdealLiquidGammaModel();
-			break;
-			case "Margules Gamma Model":
-				gm = new MargulesGammaModel(g1, g2);
-			break;
-			case "Van Laar Gamma Model":
-				gm = new VanLaarGammaModel(g1, g2);
-			break;
-			case "NRTL Gamma Model":
-				gm = new NRTLGammaModel(g1, g2, g3, g4);
-			break;
-			default:
-				//gm = new IdealLiquidGammaModel();
-				gm = new MargulesGammaModel(g1, g2);
-			break;
-			}
-			//
+			antoine2 = fc.createDoubleList(txtAntoineA2, txtAntoineB2, txtAntoineC2);			
+			txtAntoineA1.setText(antoine1.get(0).toString());
+			txtAntoineB1.setText(antoine1.get(1).toString());
+			txtAntoineC1.setText(antoine1.get(2).toString());
+			vpm1 = fc.createVapourPressureModel("Antoine", antoine1);//delete
+			vpm2 = fc.createVapourPressureModel("Antoine", antoine2);//delete
+			
 			String aux = substance1.toString();
 			substance1 = substance2.toString();
 			substance2 = aux.toString();
 			menuSubstance1.setText(substance1);
 			menuSubstance2.setText(substance2);
-			//
 			z = 1-z;
 			txtZ.setText(z.toString());
 			xd = 1-xd;
@@ -294,58 +250,43 @@ public class ViewController {
 			xb = 1-xb;
 			txtXb.setText(xb.toString());
 		}
-		MccabeThiele mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+		List<Double> operationalConditions = new ArrayList<>();
+		operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+		MccabeThiele mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 		//DEFENSIVE: Xd, Xb, Z AGAINST Xazeotrope
-		//Change X to represents X2, if substance 2 is more volatile over the domain.
-		String substance = substance1;
-		this.txtResult.setText("foi");
-		boolean componentsExchanged;
-		if(mt.mostVolatileOnFeed() == 2) {			
-			switch(gammaModelOption) {
-			case "Ideal Liquid":
-				gm = new IdealLiquidGammaModel();
-			break;
-			case "Margules Gamma Model":
-				gm = new MargulesGammaModel(g2, g1);
-			break;
-			case "Van Laar Gamma Model":
-				gm = new VanLaarGammaModel(g2, g1);
-			break;
-			case "NRTL Gamma Model":
-				gm = new NRTLGammaModel(g2, g1, g4, g3);
-			break;
-			default:
-				//gm = new IdealLiquidGammaModel();
-				gm = new MargulesGammaModel(g2, g1);
-			break;
-			}
-			vpm1 = new Antoine(a2,b2,c2);
-			vpm2 = new Antoine(a1,b1,c1);
-			mt = new MccabeThiele(externalPressure, 1-xd, 1-xb, 1-z, q, r, vpm1, vpm2, gm);
-			substance = substance2;
-			componentsExchanged = true;
-		}else {
-			componentsExchanged = false;
-			mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
-		}
 		//If substance 1 is most volatile, then Xaz > Xd > z > Xb > 0
 		//Otherwise, Xb > z > Xd > Xaz > 0
 			//xb
+			if(xb <= 0.) {
+				xb = 0.01;
+				txtXb.setText(xb.toString());
+				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
+			}
 			if(xb >= z-0.2) {
 				xb = z-0.2;
 				txtXb.setText(xb.toString());
-				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 			}
 			//Xd
+			if(xd >= 1.0) {
+				xd = 0.99;
+				txtXd.setText(xd.toString());
+				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
+			}
 			if(z+0.2 >= xd) {
 				xd = z+0.2;
 				txtXd.setText(xd.toString());
-				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 			}
 			if(mt.azeotropicPoint()-0.1 <= xd) {
 				xd = mt.azeotropicPoint()-0.1;
 				txtXd.setText(xd.toString());
-				mt = new MccabeThiele(externalPressure, xd, xb, z, q, r, vpm1, vpm2, gm);
+				operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+				mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 			}
 		//DEFENSIVE: REFLUX RATIO
 		Boolean test = mt.testR();
@@ -355,7 +296,7 @@ public class ViewController {
 			txtR.setText(r.toString());
 			test = mt.testR();
 		}
-		this.txtResult.setText(mt.toString(substance));
+		this.txtResult.setText(mt.toString(menuSubstance1.getText()));
 		XYChart.Series equilibriumLine = new XYChart.Series<>();
 		XYChart.Series diagonalLine = new XYChart.Series<>();
 		XYChart.Series rectifyingLine = new XYChart.Series<>();
@@ -519,89 +460,69 @@ public class ViewController {
 	public void onMenuItemGammaOption1() {
 		this.gammaModelOption = "Ideal Liquid";
 		this.gammaModelMenu.setText(gammaModelOption);
-		this.GammaLabel1.setDisable(true);
-		this.GammaLabel2.setDisable(true);
-		this.GammaLabel3.setDisable(true);
-		this.GammaLabel4.setDisable(true);
-		this.GammaLabel1.setOpacity(0.0);
-		this.GammaLabel2.setOpacity(0.0);
-		this.GammaLabel3.setOpacity(0.0);
-		this.GammaLabel4.setOpacity(0.0);
-		this.txtGamma1.setDisable(true);
-		this.txtGamma2.setDisable(true);
-		this.txtGamma3.setDisable(true);
-		this.txtGamma4.setDisable(true);
-		this.txtGamma1.setOpacity(0.0);
-		this.txtGamma2.setOpacity(0.0);
-		this.txtGamma3.setOpacity(0.0);
-		this.txtGamma4.setOpacity(0.0);
+		this.gammaAreaDisable(true, true, true, true);
 	}
 	public void onMenuItemGammaOption2() {
 		this.gammaModelOption = "Margules Gamma Model";
 		this.gammaModelMenu.setText(gammaModelOption);
-		this.GammaLabel1.setDisable(false);
-		this.GammaLabel2.setDisable(false);
-		this.GammaLabel3.setDisable(true);
-		this.GammaLabel4.setDisable(true);
-		this.GammaLabel1.setOpacity(1.0);
-		this.GammaLabel2.setOpacity(1.0);
-		this.GammaLabel3.setOpacity(0.0);
-		this.GammaLabel4.setOpacity(0.0);
-		this.txtGamma1.setDisable(false);
-		this.txtGamma2.setDisable(false);
-		this.txtGamma3.setDisable(true);
-		this.txtGamma4.setDisable(true);
-		this.txtGamma1.setOpacity(1.0);
-		this.txtGamma2.setOpacity(1.0);
-		this.txtGamma3.setOpacity(0.0);
-		this.txtGamma4.setOpacity(0.0);
-		this.GammaLabel1.setText("         A12");
-		this.GammaLabel2.setText("         A21");
+		this.gammaAreaDisable(false, false, true, true);
+		this.gammaAreaTextLabel("         A12", "         A21");
 	}
 	public void onMenuItemGammaOption3() {
 		this.gammaModelOption = "Van Laar Gamma Model";
 		this.gammaModelMenu.setText(gammaModelOption);
-		this.GammaLabel1.setDisable(false);
-		this.GammaLabel2.setDisable(false);
-		this.GammaLabel3.setDisable(true);
-		this.GammaLabel4.setDisable(true);
-		this.GammaLabel1.setOpacity(1.0);
-		this.GammaLabel2.setOpacity(1.0);
-		this.GammaLabel3.setOpacity(0.0);
-		this.GammaLabel4.setOpacity(0.0);
-		this.txtGamma1.setDisable(false);
-		this.txtGamma2.setDisable(false);
-		this.txtGamma3.setDisable(true);
-		this.txtGamma4.setDisable(true);
-		this.txtGamma1.setOpacity(1.0);
-		this.txtGamma2.setOpacity(1.0);
-		this.txtGamma3.setOpacity(0.0);
-		this.txtGamma4.setOpacity(0.0);
-		this.GammaLabel1.setText("         A12");
-		this.GammaLabel2.setText("         A21");
+		this.gammaAreaDisable(false, false, true, true);
+		this.gammaAreaTextLabel("         A12", "         A21");
 	}
 	public void onMenuItemGammaOption4() {
 		this.gammaModelOption = "NRTL Gamma Model";
 		this.gammaModelMenu.setText(gammaModelOption);
-		this.GammaLabel1.setDisable(true);
-		this.GammaLabel2.setDisable(true);
-		this.GammaLabel3.setDisable(true);
-		this.GammaLabel4.setDisable(true);
-		this.GammaLabel1.setOpacity(1.0);
-		this.GammaLabel2.setOpacity(1.0);
-		this.GammaLabel3.setOpacity(1.0);
-		this.GammaLabel4.setOpacity(1.0);
-		this.txtGamma1.setDisable(false);
-		this.txtGamma2.setDisable(false);
-		this.txtGamma3.setDisable(false);
-		this.txtGamma4.setDisable(false);
-		this.txtGamma1.setOpacity(1.0);
-		this.txtGamma2.setOpacity(1.0);
-		this.txtGamma3.setOpacity(1.0);
-		this.txtGamma4.setOpacity(1.0);
-		this.GammaLabel1.setText("         α12");
-		this.GammaLabel2.setText("         α21");
-		this.GammaLabel3.setText("        Δg12");
-		this.GammaLabel4.setText("        Δg21");
+		this.gammaAreaDisable(false,false,false,false);
+		this.gammaAreaTextLabel("         α12", "         α21", "       Δg12", "       Δg21");
+	}
+	protected void gammaAreaDisable(boolean... disable) {
+		List<Double> opacity = new ArrayList<>();
+		for(boolean d: disable) {
+			if(d == true) {
+				opacity.add(0.0);
+			} else {
+				opacity.add(1.0);
+			}
+		}
+		this.txtGamma1.setDisable(disable[0]);
+		this.txtGamma1.setOpacity(opacity.get(0));
+		this.txtGamma2.setDisable(disable[1]);
+		this.txtGamma2.setOpacity(opacity.get(1));
+		this.txtGamma3.setDisable(disable[2]);
+		this.txtGamma3.setOpacity(opacity.get(2));
+		this.txtGamma4.setDisable(disable[3]);
+		this.txtGamma4.setOpacity(opacity.get(3));
+		
+		this.GammaLabel1.setDisable(disable[0]);
+		this.GammaLabel1.setOpacity(opacity.get(0));
+		this.GammaLabel2.setDisable(disable[1]);
+		this.GammaLabel2.setOpacity(opacity.get(1));
+		this.GammaLabel3.setDisable(disable[2]);
+		this.GammaLabel3.setOpacity(opacity.get(2));
+		this.GammaLabel4.setDisable(disable[3]);
+		this.GammaLabel4.setOpacity(opacity.get(3));
+	}
+	protected void gammaAreaTextLabel(String... names) {
+		if(!this.GammaLabel1.isDisable()) {
+			this.GammaLabel1.setText(names[0]);
+
+		}
+		if(!this.GammaLabel2.isDisable()) {
+			this.GammaLabel2.setText(names[1]);
+
+		}
+		if(!this.GammaLabel3.isDisable()) {
+			this.GammaLabel3.setText(names[2]);
+
+		}
+		if(!this.GammaLabel4.isDisable()) {
+			this.GammaLabel4.setText(names[3]);
+
+		}
 	}
 }
