@@ -23,6 +23,7 @@ import thermodynamicsModel.VaporPressureModel;
 import thermodynamicsModel.impl.Antoine;
 import thermodynamicsModel.impl.IdealLiquidGammaModel;
 import thermodynamicsModel.impl.MargulesGammaModel;
+import thermodynamicsModel.impl.VanLaarGammaModel;
 
 public class ViewController {
 	// Project Buttoms Controls
@@ -39,6 +40,8 @@ public class ViewController {
 	@FXML
 	private Button btCondition5;
 	// Project Textfield Controls
+	@FXML
+	private MenuButton feedConditionMenu;
 	@FXML
 	private TextField txtZ;
 	@FXML
@@ -113,6 +116,8 @@ public class ViewController {
 	@FXML
 	private MenuItem gammaModelMenuItem2;
 	@FXML
+	private MenuItem gammaModelMenuItem3;
+	@FXML
 	private TextField txtGamma1;
 	@FXML
 	private TextField txtGamma2;
@@ -139,7 +144,9 @@ public class ViewController {
 
 	public void onBtCondition1Action() {
 		this.condition = 1.0;
-		labelQ.setText("q factor");
+		feedConditionMenu.setText("Subcooled liquid");
+		labelQ.setText("      q factor");
+		txtQ.setDisable(false);
 		txtQ.setText("1.5");
 		;
 	}
@@ -147,28 +154,36 @@ public class ViewController {
 	public void onBtCondition2Action() {
 		this.condition = 2.0;
 		this.q = 1.0;
-		labelQ.setText("q factor is 1.0 for inserted condition");
+		feedConditionMenu.setText("Saturated liquid");
+		labelQ.setText("      q factor");
+		txtQ.setDisable(true);
 		txtQ.setText("1.0");
 	}
 
 	public void onBtCondition3Action() {
 		this.condition = 3.0;
-		labelQ.setText("Feed vaporized fraction (betha)");
+		feedConditionMenu.setText("Partially vaporized");
+		labelQ.setText("        Betha");
 		txtQ.setText("0.5");
+		txtQ.setDisable(false);
 		;
 	}
 
 	public void onBtCondition4Action() {
 		this.condition = 4.0;
 		this.q = 0.0;
-		labelQ.setText("q factor is 0.0 for inserted condition");
+		feedConditionMenu.setText("Saturated vapour");
+		labelQ.setText("      q factor");
 		txtQ.setText("0.0");
+		txtQ.setDisable(true);
 	}
 
 	public void onBtCondition5Action() {
 		this.condition = 5.0;
-		labelQ.setText("q factor");
+		feedConditionMenu.setText("Superheated vapour");
+		labelQ.setText("      q factor");
 		txtQ.setText("-0.5");
+		txtQ.setDisable(false);
 	}
 	public synchronized void auxiliar() {
 
@@ -211,6 +226,9 @@ public class ViewController {
 		case "Margules Gamma Model":
 			gm = new MargulesGammaModel(g1, g2);
 		break;
+		case "Van Laar Gamma Model":
+			gm = new VanLaarGammaModel(g1, g2);
+		break;
 		default:
 			//gm = new IdealLiquidGammaModel();
 			gm = new MargulesGammaModel(g1, g2);
@@ -247,6 +265,9 @@ public class ViewController {
 			case "Margules Gamma Model":
 				gm = new MargulesGammaModel(g1, g2);
 			break;
+			case "Van Laar Gamma Model":
+				gm = new VanLaarGammaModel(g1, g2);
+			break;
 			default:
 				//gm = new IdealLiquidGammaModel();
 				gm = new MargulesGammaModel(g1, g2);
@@ -279,6 +300,9 @@ public class ViewController {
 			break;
 			case "Margules Gamma Model":
 				gm = new MargulesGammaModel(g2, g1);
+			break;
+			case "Van Laar Gamma Model":
+				gm = new VanLaarGammaModel(g2, g1);
 			break;
 			default:
 				//gm = new IdealLiquidGammaModel();
@@ -382,13 +406,13 @@ public class ViewController {
 				Double Xf = plateList.get(count).getX();
 				Double Yi = plateList.get(count).getY();
 				Double Yf = null;
-				if (mt.getRectifyingLine().y(Xf) < mt.getStrippingLine().y(Xf)) {
+				if (!mt.getRectifyingLine().compareTo(mt.getStrippingLine(), Xf)) {
 					Yf = mt.getRectifyingLine().y(Xf);
 				} else {
 					Yf = mt.getStrippingLine().y(Xf);
 				}
 				for (int i = 0; i < 10; i++) {
-					if (mt.getRectifyingLine().y(Xi) < mt.getStrippingLine().y(Xi)) {
+					if (!mt.getRectifyingLine().compareTo(mt.getStrippingLine(), Xi)) {
 						Xi = mt.getRectifyingLine().x(Yi);
 					} else {
 						Xi = mt.getStrippingLine().x(Yi);
@@ -504,6 +528,28 @@ public class ViewController {
 	}
 	public void onMenuItemGammaOption2() {
 		this.gammaModelOption = "Margules Gamma Model";
+		this.gammaModelMenu.setText(gammaModelOption);
+		this.GammaLabel1.setDisable(false);
+		this.GammaLabel2.setDisable(false);
+		this.GammaLabel3.setDisable(true);
+		this.GammaLabel4.setDisable(true);
+		this.GammaLabel1.setOpacity(1.0);
+		this.GammaLabel2.setOpacity(1.0);
+		this.GammaLabel3.setOpacity(0.0);
+		this.GammaLabel4.setOpacity(0.0);
+		this.txtGamma1.setDisable(false);
+		this.txtGamma2.setDisable(false);
+		this.txtGamma3.setDisable(true);
+		this.txtGamma4.setDisable(true);
+		this.txtGamma1.setOpacity(1.0);
+		this.txtGamma2.setOpacity(1.0);
+		this.txtGamma3.setOpacity(0.0);
+		this.txtGamma4.setOpacity(0.0);
+		this.GammaLabel1.setText("         A12");
+		this.GammaLabel2.setText("         A21");
+	}
+	public void onMenuItemGammaOption3() {
+		this.gammaModelOption = "Van Laar Gamma Model";
 		this.gammaModelMenu.setText(gammaModelOption);
 		this.GammaLabel1.setDisable(false);
 		this.GammaLabel2.setDisable(false);

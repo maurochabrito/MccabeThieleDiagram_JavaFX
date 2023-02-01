@@ -82,45 +82,40 @@
       </Label>
       <TextField fx:id="txtXd" alignment="CENTER" layoutX="107.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.85" />
       <TextField fx:id="txtXb" alignment="CENTER" layoutX="203.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.1" />
-      <Label layoutX="236.0" layoutY="528.0" text="Feed thermal condiction " textFill="RED">
+      <Label layoutX="515.0" layoutY="428.0" text="Feed condiction " textFill="RED">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="btCondition1" layoutX="22.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition1Action" text="Subcooled liquid" />
-      <Button fx:id="btCondition2" layoutX="141.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition2Action" text="Saturated liquid" />
-      <Button fx:id="btCondition3" layoutX="257.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition3Action" text="Partially vaporized" />
-      <Button fx:id="btCondition4" layoutX="381.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition4Action" text="Satured vapour" />
-      <Button fx:id="btCondition5" layoutX="489.0" layoutY="554.0" mnemonicParsing="false" onAction="#onBtCondition5Action" text="Superheated vapor" />
-      <Label fx:id="labelQ" layoutX="119.0" layoutY="601.0" text="q factor">
+      <Label fx:id="labelQ" layoutX="522.0" layoutY="493.0" prefHeight="15.0" prefWidth="98.0">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="txtQ" alignment="CENTER" layoutX="22.0" layoutY="596.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
+      <TextField fx:id="txtQ" alignment="CENTER" disable="true" layoutX="527.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="0.5" />
       <Button fx:id="btRun" layoutX="527.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBtRunAction" text="Run">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="317.0" layoutY="428.0" text="External Pressure" textFill="RED">
+      <Label layoutX="429.0" layoutY="428.0" text="Pressure" textFill="RED">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPressure" alignment="CENTER" layoutX="334.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.0" />
-      <Label layoutX="358.0" layoutY="493.0" prefHeight="15.0" prefWidth="33.0" text="(atm)">
+      <TextField fx:id="txtPressure" alignment="CENTER" layoutX="417.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.0" />
+      <Label layoutX="441.0" layoutY="493.0" prefHeight="15.0" prefWidth="33.0" text="(atm)">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="480.0" layoutY="428.0" text="Reflux Ratio" textFill="RED">
+      <Label layoutX="315.0" layoutY="428.0" text="Reflux Ratio" textFill="RED">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="txtR" alignment="CENTER" layoutX="478.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.5" />
-      <Label layoutX="450.0" layoutY="493.0" prefHeight="15.0" prefWidth="154.0" text="(as a minimal RR multiple)">
+      <TextField fx:id="txtR" alignment="CENTER" layoutX="313.0" layoutY="461.0" prefHeight="23.0" prefWidth="80.0" text="1.5" />
+      <Label layoutX="291.0" layoutY="493.0" prefHeight="15.0" prefWidth="124.0" text="(as a RRmin multiple)">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -166,7 +161,7 @@
         <items>
           <MenuItem fx:id="gammaModelMenuItem1" mnemonicParsing="false" onAction="#onMenuItemGammaOption1" text="Ideal Liquid" />
           <MenuItem fx:id="gammaModelMenuItem2" mnemonicParsing="false" onAction="#onMenuItemGammaOption2" text="Margules Gamma Model" />
-            <MenuItem mnemonicParsing="false" text="Van Laar Gamma Model" />
+            <MenuItem fx:id="gammaModelMenuItem3" mnemonicParsing="false" onAction="#onMenuItemGammaOption3" text="Van Laar Gamma Model" />
             <MenuItem mnemonicParsing="false" text="Wilson Gamma Model" />
             <MenuItem mnemonicParsing="false" text="NRTL Gamma Model" />
         </items>
@@ -195,5 +190,14 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
+      <MenuButton fx:id="feedConditionMenu" layoutX="511.0" layoutY="424.0" mnemonicParsing="false" text="Feed Condition">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#onBtCondition1Action" text="Subcooled liquid" />
+          <MenuItem mnemonicParsing="false" onAction="#onBtCondition2Action" text="Saturated liquid" />
+            <MenuItem mnemonicParsing="false" onAction="#onBtCondition3Action" text="Partially vaporized" />
+            <MenuItem mnemonicParsing="false" onAction="#onBtCondition4Action" text="Satured vapour" />
+            <MenuItem mnemonicParsing="false" onAction="#onBtCondition5Action" text="Superheated vapour" />
+        </items>
+      </MenuButton>
    </children>
 </AnchorPane>

@@ -5,7 +5,7 @@ import thermodynamicsModel.RaoultLaw;
 import thermodynamicsModel.VaporPressureModel;
 
 public class Line {
-	protected final Double h = 0.00001;
+	protected final Double h = 0.000001;
 	protected Double alpha;
 	protected Double betha;
 	
