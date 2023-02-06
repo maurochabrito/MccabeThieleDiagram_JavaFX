@@ -1,12 +1,12 @@
-package thermodynamicsModel.impl;
+package thermodynamics.impl;
 
-import thermodynamicsModel.GammaModel;
+import thermodynamics.GammaModel;
 
-public class MargulesGammaModel implements GammaModel {
+public class WilsonGammaModel implements GammaModel {
 	Double A1;
 	Double A2;
 	
-	public MargulesGammaModel(Double a1, Double a2) {
+	public WilsonGammaModel(Double a1, Double a2) {
 		A1 = a1;
 		A2 = a2;
 	}

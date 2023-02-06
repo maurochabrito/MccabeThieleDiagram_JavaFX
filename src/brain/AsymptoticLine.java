@@ -1,7 +1,7 @@
 package brain;
 
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.VaporPressureModel;
+import thermodynamics.GammaModel;
+import thermodynamics.VaporPressureModel;
 
 public class AsymptoticLine extends QLine {
 	Double XLimit;

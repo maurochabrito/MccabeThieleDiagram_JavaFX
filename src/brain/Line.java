@@ -1,8 +1,8 @@
 package brain;
 
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.RaoultLaw;
-import thermodynamicsModel.VaporPressureModel;
+import thermodynamics.GammaModel;
+import thermodynamics.RaoultLaw;
+import thermodynamics.VaporPressureModel;
 
 public class Line {
 	protected final Double h = 0.000001;

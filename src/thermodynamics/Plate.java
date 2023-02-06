@@ -1,4 +1,4 @@
-package brain;
+package thermodynamics;
 
 import java.io.Serializable;
 

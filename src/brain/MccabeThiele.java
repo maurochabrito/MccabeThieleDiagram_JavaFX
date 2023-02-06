@@ -3,9 +3,10 @@ package brain;
 import java.util.ArrayList;
 import java.util.List;
 
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.RaoultLaw;
-import thermodynamicsModel.VaporPressureModel;
+import thermodynamics.GammaModel;
+import thermodynamics.Plate;
+import thermodynamics.RaoultLaw;
+import thermodynamics.VaporPressureModel;
 
 public class MccabeThiele {
 	public static final Integer maximumPlates = 100; 

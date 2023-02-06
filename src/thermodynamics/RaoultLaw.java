@@ -1,4 +1,4 @@
-package thermodynamicsModel;
+package thermodynamics;
 
 public class RaoultLaw {
 	

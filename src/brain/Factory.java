@@ -3,14 +3,14 @@ package brain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.TextField;
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.VaporPressureModel;
-import thermodynamicsModel.impl.Antoine;
-import thermodynamicsModel.impl.IdealLiquidGammaModel;
-import thermodynamicsModel.impl.MargulesGammaModel;
-import thermodynamicsModel.impl.NRTLGammaModel;
-import thermodynamicsModel.impl.VanLaarGammaModel;
+import javafx.scene.control.TextInputControl;
+import thermodynamics.GammaModel;
+import thermodynamics.VaporPressureModel;
+import thermodynamics.impl.Antoine;
+import thermodynamics.impl.IdealLiquidGammaModel;
+import thermodynamics.impl.MargulesGammaModel;
+import thermodynamics.impl.NRTLGammaModel;
+import thermodynamics.impl.VanLaarGammaModel;
 
 public class Factory {
 	
@@ -32,10 +32,10 @@ public class Factory {
 		return list;
 	}
 	//overload2
-	public List<Double> createDoubleList(TextField... value){
+	public List<Double> createDoubleList(TextInputControl... value){
 		List<Double> list = new ArrayList<>();
-		for(TextField v: value) {
-			list.add(Double.parseDouble(v.getText()));
+		for(TextInputControl v: value) {
+			list.add(Double.parseDouble( v.getText()));
 		}
 		return list;
 	}

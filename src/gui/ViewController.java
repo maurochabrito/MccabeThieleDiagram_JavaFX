@@ -1,12 +1,12 @@
 package gui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import brain.Factory;
 import brain.MccabeThiele;
-import brain.Plate;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -18,16 +18,18 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.RaoultLaw;
-import thermodynamicsModel.VaporPressureModel;
-import thermodynamicsModel.impl.Antoine;
-import thermodynamicsModel.impl.IdealLiquidGammaModel;
-import thermodynamicsModel.impl.MargulesGammaModel;
-import thermodynamicsModel.impl.NRTLGammaModel;
-import thermodynamicsModel.impl.VanLaarGammaModel;
+import thermodynamics.GammaModel;
+import thermodynamics.Plate;
+import thermodynamics.RaoultLaw;
+import thermodynamics.VaporPressureModel;
+import thermodynamics.impl.Antoine;
+import thermodynamics.impl.IdealLiquidGammaModel;
+import thermodynamics.impl.MargulesGammaModel;
+import thermodynamics.impl.NRTLGammaModel;
+import thermodynamics.impl.VanLaarGammaModel;
 
 public class ViewController {
+	Factory fc = new Factory();
 	// Project Buttoms Controls
 	@FXML
 	private Button btRun;
@@ -205,7 +207,6 @@ public class ViewController {
 	}
 	public synchronized void auxiliar() {
 		Locale.setDefault(Locale.US);
-		Factory fc = new Factory();
 		this.externalPressure = 760.0*Double.parseDouble(txtPressure.getText());
 		this.xb = Double.parseDouble(txtXb.getText());
 		this.xd = Double.parseDouble(txtXd.getText());
@@ -268,6 +269,8 @@ public class ViewController {
 		}
 		List<Double> operationalConditions = new ArrayList<>();
 		operationalConditions = fc.createDoubleList(externalPressure, xd, xb, z, q, r);
+		//vpm1 = new Antoine(15.8737, 2911.32, -56.51);
+		//vpm2 = new Antoine(15.9426, 3120.29, -63.63);
 		MccabeThiele mt = fc.createMccabeThiele(operationalConditions, antoine1, antoine2, gamma, gammaModelOption);
 		//DEFENSIVE: Xd, Xb, Z AGAINST Xazeotrope
 		//If substance 1 is most volatile, then Xaz > Xd > z > Xb > 0
@@ -306,7 +309,7 @@ public class ViewController {
 			}
 		//DEFENSIVE: REFLUX RATIO
 		Boolean test = mt.testR();
-		while(mt.testR() && r < 50.0) {
+		while(mt.testR() && r < 20.0) {
 			r = r+0.1;
 		    mt.setR(r);
 			txtR.setText(r.toString());

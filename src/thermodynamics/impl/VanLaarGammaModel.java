@@ -1,6 +1,6 @@
-package thermodynamicsModel.impl;
+package thermodynamics.impl;
 
-import thermodynamicsModel.GammaModel;
+import thermodynamics.GammaModel;
 
 public class VanLaarGammaModel implements GammaModel {
 	Double A1;

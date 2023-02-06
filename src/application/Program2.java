@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import brain.MccabeThiele;
-import brain.Plate;
 import javafx.scene.chart.XYChart;
-import thermodynamicsModel.GammaModel;
-import thermodynamicsModel.RaoultLaw;
-import thermodynamicsModel.VaporPressureModel;
-import thermodynamicsModel.impl.Antoine;
-import thermodynamicsModel.impl.MargulesGammaModel;
+import thermodynamics.GammaModel;
+import thermodynamics.Plate;
+import thermodynamics.RaoultLaw;
+import thermodynamics.VaporPressureModel;
+import thermodynamics.impl.Antoine;
+import thermodynamics.impl.MargulesGammaModel;
 
 public class Program2 {
 

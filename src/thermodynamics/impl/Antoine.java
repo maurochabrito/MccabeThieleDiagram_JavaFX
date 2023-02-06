@@ -1,6 +1,6 @@
-package thermodynamicsModel.impl;
+package thermodynamics.impl;
 
-import thermodynamicsModel.VaporPressureModel;
+import thermodynamics.VaporPressureModel;
 
 public class Antoine implements VaporPressureModel {
 	Double A;
