@@ -30,7 +30,7 @@ import thermodynamics.impl.VanLaarGammaModel;
 
 public class ViewController {
 	Factory fc = new Factory();
-	// Project Buttoms Controls
+	// Project Buttoms Controls//
 	@FXML
 	private Button btRun;
 	@FXML
